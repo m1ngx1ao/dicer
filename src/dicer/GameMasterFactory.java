@@ -4,20 +4,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import contestants.trivial.*;
-
-//SOME IMPORTS
+import contestants.m1ngxu.M1ngXU;
 import contestants.tensor.TensorContestant;
-
-//SOME IMPORTS
 
 public class GameMasterFactory {
 	public static GameMaster get(Rules rules) {
 		List<Contestant> contestants = new LinkedList<Contestant>();
 		contestants.add(new TrivialContestant());
-		//SOME CONTESTANTS
 		contestants.add(new TensorContestant());
-		
-		//SOME CONTESTANTS
+		contestants.add(new M1ngXU());
 		return new GameMaster(rules, contestants);
 	}
 }

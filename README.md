@@ -15,3 +15,4 @@ To execute, use:
 Currently, there are the following strategies:
 * Trivial strategy `TrivialContestant` that has a win-rate of $\frac{2}{3}$.
 * Dynamic programming based `ProbabilityTensor` that has an optimal win-rate of about $71.45\%$.
+* And there is a further surprise strategy...
