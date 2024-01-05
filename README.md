@@ -12,4 +12,6 @@ To execute, use:
 * `OneGameVisualizer` for getting an overview of what happened in one game.
 * `Simulator` for playing 100,000 games and obtaining the success rate.
 
-Currently, there is only a trivial strategy `TrivialContestant` that has a win-rate of $\frac{2}{3}$.
+Currently, there are the following strategies:
+* Trivial strategy `TrivialContestant` that has a win-rate of $\frac{2}{3}$.
+* Dynamic programming based `ProbabilityTensor` that has an optimal win-rate of about $71.45\%$.
