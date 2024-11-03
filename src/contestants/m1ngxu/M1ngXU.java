@@ -2,61 +2,25 @@ package contestants.m1ngxu;
 
 import dicer.Contestant;
 import dicer.Rules;
+import java.util.Base64;
 
 public class M1ngXU implements Contestant {
-	private boolean[][][][] bestResult;
-	private Rules rules;
+    private static byte[] best = Base64.getDecoder().decode(
+            "AAAAAAAAAAAAAAAAAAAAAAAAPM/zAADw//8DAMD//w8AAO7/PwAAuP//AADg/v8DAID7/w8AAO7/PwAAAAAAAAAAAAAAAAAAAAAAgO/7PgAA/v//AADw//8DAMD//w8AAO//PwAAvP//AADw/v8DAMD7/w8AAAAAAAAAAAAAAAAAAAAAAPD//w8AgP//PwAA/v//AAD4//8DAMD//w8AAP//PwAA/P//AADw//8DAAAAAAAAAAAAAACAIAiCAAD+//8DAOj//w8AoP//PwCA/v//AAD6//8DAOj//w8AoP//PwCA/v//AAAAAAAAAAAAAAAAMAzDMADA////AAD///8DAOz//w8AsP//PwDA/v//AAD7//8DAOz//w8AsP//PwAAAAAAAAAAAAAAAI7jOA4A+P//PwDg////AID///8DAP7//w8A+P//PwDg////AID///8DAP7//w8AAAAAAAAAAAAAAMDzPM8DAP///w8A/P//PwDw////AMD///8DAP///w8A/P//PwDw////AMD///8DAAAAAAAAAAAAAAD4vu/7AOD///8DgP///w8A/v//PwD4////AOD///8DgP///w8A/v//PwD4////AAAAAAAAAAAAAAAA////PwD8////APD///8DwP///w8A////PwD8////APD///8DwP///w8A////PwiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAhBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEAQhCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQhCAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIghAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAA");
 
-	@Override
-	public void setup(Rules r) {
-		rules = r;
+    @Override
+    public void setup(Rules r) {
+        assert r.targetPoints == 15;
+        assert r.diceSides == 6;
+        assert r.maxThrows == 10;
+        assert r.maxRetains == 6;
+    }
 
-		int v = 0;
-		bestResult = new boolean[r.targetPoints][r.diceSides][r.maxRetains][r.maxThrows];
-		boolean[][][][] t = new boolean[r.targetPoints][r.diceSides][r.maxRetains][r.maxThrows];
-		for (int a = 0; a < r.targetPoints; a++) {
-			for (int b = 0; b < r.diceSides; b++) {
-				for (int c = 0; c < r.maxRetains; c++) {
-					for (int d = 0; d < r.maxThrows; d++) {
-						for (int isRetainedInt = 0; isRetainedInt < 2; isRetainedInt++) {
-							t[a][b][c][d] = isRetainedInt == 1;
-							int w = 0;
-							for (int i = 0; i < 1000; i++) {
-								int g = 0;
-								int h = 0;
-								for (int e = 0; e < r.maxThrows && h < r.maxRetains && g < r.targetPoints; e++) {
-									int f = (int) (Math.random() * r.diceSides) + 1;
-									if (t[g][f - 1][h][e]) {
-										g += f;
-										h++;
-									}
-								}
-								if (g == r.targetPoints)
-									w++;
-							}
-							if (w > v) {
-								v = w;
-								for (int aa = 0; aa < r.targetPoints; aa++) {
-									for (int bb = 0; bb < r.diceSides; bb++) {
-										for (int cc = 0; cc < r.maxRetains; cc++) {
-											for (int dd = 0; dd < r.maxThrows; dd++) {
-												bestResult[aa][bb][cc][dd] = t[aa][bb][cc][dd];
-											}
-										}
-									}
-								}
-							}							
-						}
-					}
-				}
-			}
-		}
-	}
-
-	@Override
-	public boolean toBeRetained(int currentPoints, int throwsLeft, int retainsLeft, int diceResult) {
-		if (throwsLeft <= 0 || retainsLeft <= 0 || currentPoints >= rules.targetPoints)
-			return false;
-		return bestResult[currentPoints][diceResult - 1][rules.maxRetains - retainsLeft][rules.maxThrows - throwsLeft];
-	}
+    @Override
+    public boolean toBeRetained(int currentPoints, int throwsLeft, int retainsLeft, int diceResult) {
+        if (currentPoints >= 15)
+               return false;
+        int idx = currentPoints * 11 * 7 * 6 + throwsLeft * 7 * 6 + retainsLeft * 6 + diceResult - 1;
+        return (best[idx / 8] & (1L << (idx % 8))) != 0;
+    }
 }
