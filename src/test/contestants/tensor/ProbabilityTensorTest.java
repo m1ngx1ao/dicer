@@ -16,7 +16,6 @@ class ProbabilityTensorTest {
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		pt = new ProbabilityTensor(new Rules(15, 6, 10, 6));
-		System.out.println(pt.get(0, 10, 6));
 	}
 
 	@BeforeEach
