@@ -21,6 +21,6 @@ public class M1ngXU implements Contestant {
         if (currentPoints >= 15)
                return false;
         int idx = currentPoints * 11 * 7 * 6 + throwsLeft * 7 * 6 + retainsLeft * 6 + diceResult - 1;
-        return (best[idx / 8] & (1L << (idx % 8))) != 0;
+        return (best[idx >> 3] & (1L << (idx & 7))) != 0;
     }
 }

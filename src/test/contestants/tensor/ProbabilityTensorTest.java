@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import contestants.tensor.ProbabilityTensor;
 import dicer.Rules;
+import dicer.Rules.Goal;
 
 class ProbabilityTensorTest {
 
@@ -15,7 +16,7 @@ class ProbabilityTensorTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		pt = new ProbabilityTensor(new Rules(15, 6, 10, 6));
+		pt = new ProbabilityTensor(new Rules(15, 6, 10, 6, false, Goal.obtainTargetPoints));
 	}
 
 	@BeforeEach

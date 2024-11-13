@@ -17,11 +17,11 @@ public class State {
 	}
 
 	public boolean hasWon() {
-		return pointsLeft == 0;
+		return pointsLeft == 0 && retainsLeft == 0;
 	}
 
 	public boolean hasLost() {
-		return pointsLeft < 0 || (pointsLeft > 0 && (throwsLeft == 0 || retainsLeft == 0));
+		return pointsLeft < 0 || (pointsLeft > 0 && (throwsLeft == 0 || retainsLeft == 0)) || (retainsLeft != 0 && pointsLeft == 0);
 	}
 	
 	@Override
@@ -31,9 +31,7 @@ public class State {
 
 	@Override
 	public int hashCode() {
-		return Arrays.stream(getElems())
-			.map(e -> Integer.valueOf(e).hashCode())
-			.reduce(0, (h, eh) -> h ^ eh);
+		return Arrays.hashCode(getElems());
 	}
 
 	@Override
@@ -43,11 +41,6 @@ public class State {
 		}
 		int[] myElems = getElems();
 		int[] oElems = ((State) o).getElems();
-		for (int i = 0; i < myElems.length; i++) {
-			if (myElems[i] != oElems[i]) {
-				return false;
-			}
-		}
-		return true;
+		return Arrays.equals(myElems, oElems);
 	}
 }
