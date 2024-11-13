@@ -13,7 +13,7 @@ public class Simulator {
 		Map<Contestant, Integer> winsByContestant = new HashMap<Contestant, Integer>();
 		Map<Contestant, Integer> totalLossByContestant = new HashMap<Contestant, Integer>();
 		GameMaster gm = GameMasterFactory.get(new Rules(
-			15, 6, 10, 6, false,
+			15, 6, 10, 6, true,
 			//Goal.obtainTargetPoints
 			Goal.minimizeDistanceToTargetPoints
 		));
